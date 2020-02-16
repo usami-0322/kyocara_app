@@ -1,16 +1,12 @@
 <div class="main users-show">
   <div class="container">
     <div class="user-show-item">
-      <!-- 個人情報 -->
-      <img src=>
+
+      <img src="<%= "/#{@user.image_name}" %>">
       <p><%= @user.name %></p>
       <p><%= @user.email %></p>
       <%= link_to("編集", "/users/#{@user.id}/edit") %>
-       <!-- 当事者の投稿の一覧> -->
-        <% @user.posts.each do |post| %>
-        <!-- 画像、投稿をここに入れる -->
-      <%= post %>
-      <% end %>
+      
       
     </div>
   </div>

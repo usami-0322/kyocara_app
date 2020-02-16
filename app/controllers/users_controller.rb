@@ -38,16 +38,23 @@ class UsersController < ApplicationController
   end
   
   def logout
+    session[:user_id] = nil
+    flash[:notice] = "ログアウトしました"
+    render("users/login_form")
   end
   
   def create
     @user = User.new(
       name: params[:name],
       email: params[:email],
-      password: params[:password])
+      image_name: "default.jpeg",
+      password: params[:password]
+      )
     if @user.save
+      #新規登録でログイン状態にする
+      session[:user_id] = @user.id
       flash[:notice] = "新規登録できました"
-      redirect_to("/posts/index")
+      redirect_to("/posts/index}")
     else
       render("users/new")
     end
@@ -55,12 +62,18 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find_by(id: params[:id])
-    @usr.name = params[:name]
+    @user.name = params[:name]
     @user.email = params[:email]
-    @user.password = params[:password]
+    
+    if params[:image]
+     @user.image_name = "#{@user.id}.jpg"
+     image = params[:image]
+     File.binwrite("public/#{@user.image_name}", image.read)
+    end
+    
     if @user.save
       flash[:notice] = "変更しました"
-      redirect_to("/users/index")
+      redirect_to("/users/#{@user.id}")
     else
       render("users/edit")
     end

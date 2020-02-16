@@ -1,9 +1,9 @@
 <div class="main posts-index">
   <div class="container">
-    <h2 classs="form-head">みんなの投稿</h2>
+    <h2>みんなの投稿</h2>
     <% @posts.each do |post| %>
     <div class="post-index-item">
-    <%= link_to(post.content, "/posts/#{id}) %>
+    <%= link_to(post.content, "/posts/#{post.id}") %>
     </div>
     <% end %>
   </div>
