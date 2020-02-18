@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user, {only: [:index, :show, :edit, :update]}
+  before_action :forbit_login_user, {only: [:login_form, :login, :create, :new]}
+ # before_action :ensure_correct_user, {only: [:edit, :update]}
+  
   def index
     @users = User.all
   end
@@ -40,7 +44,7 @@ class UsersController < ApplicationController
   def logout
     session[:user_id] = nil
     flash[:notice] = "ログアウトしました"
-    render("users/login_form")
+    render("home/top")
   end
   
   def create
@@ -78,6 +82,11 @@ class UsersController < ApplicationController
       render("users/edit")
     end
   end
-
-
+  
+  def ensure_correct_user
+    if @current_user.id != params[:id].to_i
+      flash[:notice] = "権限がありません"
+      redirect_to("/posts/index")
+    end
+  end
 end

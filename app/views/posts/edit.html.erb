@@ -1,7 +1,7 @@
 <div class="main posts-new">
   <div class="container">
     <h2 class="form-head">編集する</h2>
-    <%= form_tag(/posts/#{@post.id}/update) do %>
+    <%= form_tag("/posts/#{@post.id}/update") do %>
     <div class="form form-body">
       <% @post.errors.full_messages.each do |message| %>
       <div class="error-message">

@@ -24,10 +24,14 @@
         <% end %>
       </ul>
     </nav>
-    <div class="head-left">
-      <%= current_user = User.find_by(id: session[:user_id]) %>
-      </div>
     </header>
+    
+    <% if flash[:notice] %>
+      <div class="flash">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    
     <%= yield %>
   </body>
 </html>
